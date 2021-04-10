@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+    <h1> Buyer information</h1>
+    {% for i in buyerlist %}
+
+        {{ i.buyer_name }}<br>
+
+        {{ i.contact_no}}<br>
+
+
+        <br>
+        <br>
+
+
+    {% endfor %}
+
+
+{% endblock content %}

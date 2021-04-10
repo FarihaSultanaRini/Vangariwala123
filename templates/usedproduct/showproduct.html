@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+
+    <h1 style="color: darkkhaki" ;> Product information</h1>
+
+ <div class="row row-cols-1 row-cols-md-3">
+
+
+     {% for i in userlist %}
+ <div class="col mb-4">
+    <div class="card h-100" style="width: 18rem;">
+
+  <img src="{{ i.product_pic.url }}" class="card-img-top" alt="...">
+  <div class="card-body">
+
+    <h5 class="card-title"><b style="color: olive";>product type: </b>{{ i.product_type}}</h5>
+
+    <p class="card-text">
+     <b style="color:darkolivegreen";>  product weight: </b> {{ i.weight}} kg<br>
+        <b style="color: darkolivegreen";> product price per kg: </b> {{ i.price }} taka<br>
+          <b style="color: darkolivegreen";> seller information </b> {{ i.seller }} <br>
+
+    </p>
+
+     <a href="{{ i.id }}">
+
+
+        <!--  <button type="submit" class="btn btn-success">Details</button>-->
+         <button type="submit" name="show" class="btn btn-success">Details</button>
+                </a>
+
+
+
+
+  </div>
+</div>
+         </div>
+   {% endfor %}
+ </div>
+
+        <br>
+        <br>
+
+
+{% endblock content %}
