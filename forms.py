@@ -1,9 +1,7 @@
 from django import forms
-from .models import Seller
+from .models import Pickup
 
-class SellerInput(forms.ModelForm):
+class Pickupinsertform(forms.ModelForm):
     class Meta:
-        model=Seller
-        fields=['seller_name' , 'email','address','contact','details']
-
-
+        model=Pickup
+        fields=['Shedule']
