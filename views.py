@@ -1,52 +1,12 @@
+from django.shortcuts import render
 
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Pickup
-from .forms import Pickupinsertform
-from django.contrib.auth.decorators import login_required
-
+from .models import  Payment
 # Create your views here.
-@login_required
-def pickUp(request):
-    all_pickup=Pickup.objects.all()
 
+def showpayment(request):
+    all_pay=Payment.objects.all()
     context={
-        'pickuplist':all_pickup
+        'paymentlist':all_pay
     }
 
-    return render(request,'pickup/pickinfo.html',context)
-
-def insertpickup(request):
-    form=Pickupinsertform()
-    msg="seller information "
-
-    if request.method=="POST":
-        form=Pickupinsertform(request.POST)
-        #msg="not successful"
-        if form.is_valid():
-          form.save()
-          form=Pickupinsertform()
-          msg="successfull🎈"
-
-          return redirect('showpickup')
-
-
-    context={
-        'form':form,
-        'msg':msg
-
-    }
-
-    return  render (request,'pickup/insertpickup.html',context)
-
-def pickUps(request):
-
-
-
-
-
-
-    return render(request,'pickup/done pickup.html')
-
-
-
-
+    return  render(request,'Payment/paymentinfo.html',context)
