@@ -1,41 +1,58 @@
-
+#from django.shortcuts import render,redirect
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Seller
-from .forms import SellerInput
-
+from django.contrib.auth.forms import UserCreationForm
+from .forms import ProfileForm
 from django.contrib.auth.decorators import login_required
+from .models import Profile
+# Create your views here.
 
-#Create your views here.
-@login_required
-def showseller(request):
-    alluser = Seller.objects.all()
+def registration(request):
+    form = UserCreationForm()
 
-    contex = {
-        'userlist': alluser
-    }
-    return render(request, 'sellermanagement/sellerlist.html', contex)
-#@login_required
 
-def insertseller(request):
-    form=SellerInput()
-    msg="seller information "
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
 
-    if request.method=="POST":
-        form=SellerInput(request.POST)
-        #msg="not successful"
         if form.is_valid():
-          form.save()
-          form=SellerInput()
-          msg="successfull🎈"
-          return redirect('insertpickup')
+         user=form.save(commit=False)
+         user.is_active=False
+         user.save()
+         return redirect('login')
 
     context={
-        'form':form,
-        'msg':msg
-
+        'form':form
     }
 
-    return  render (request,'sellermanagement/insertseller.html',context)
+    return render(request,'Usermanagement/registration.html',context)
+@login_required
+def create_profile(request):
+    form = ProfileForm()
+
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid:
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            return redirect('view_profile')
+
+    context = {
+        'form' : form
+    }
+    return render(request, 'Usermanagement/createprofile.html', context)
+
+
+@login_required
+def view_profile(request):
+
+
+    profile=Profile.objects.get(user=request.user)
 
 
 
+
+    context = {
+        'profile': profile
+    }
+
+    return render(request, 'UserManagement/viewprofile.html', context)
